@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import {Button} from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import SplashScreen from "../screens/SplashScreen";
+import  UserContext  from "../App";
+
 import HomeScreen from "../screens/Home";
-import ReportScreen from "../screens/Report";
+import ReportsScreen from "../screens/Reports";
 import DrugsScreen from "../screens/Drugs";
 import SignInScreen from "../screens/SignIn";
 
@@ -11,22 +13,16 @@ const Stack = createStackNavigator()
 
 export default class StackNavigator extends Component{
 
+    static contextType = UserContext
+
     constructor(props){
         super(props)
-        this.state = {
-            isLoading: false,
-            isSignedIn: null
-        }
     }
 
     render() {
-        if(this.state.isLoading){
-            return <SplashScreen />
-        }
-
         return(
             <Stack.Navigator>
-                {this.state.isSignedIn == null ? (
+                {this.context.user?.token == null ? (
                     // No token found, user isn't signed in
                     <Stack.Screen
                         name="SignIn"
@@ -38,8 +34,17 @@ export default class StackNavigator extends Component{
                 ) : (
                 // User is signed in
                     <>
-                        <Stack.Screen name="Home" component={HomeScreen} />
-                        <Stack.Screen name="Reports" component={ReportScreen} />
+                        <Stack.Screen name="Home" component={HomeScreen} options={{
+                            headerRight: () => (
+                                <Button
+                                  onPress={this.logout}
+                                  title="Logout"
+                                  color="#000"
+                                />
+                                ),
+                            }} />
+                        
+                        <Stack.Screen name="Reports" component={ReportsScreen} />
                         <Stack.Screen name="Drugs" component={DrugsScreen} />
                     </>
                 )}
