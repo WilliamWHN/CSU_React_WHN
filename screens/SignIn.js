@@ -5,19 +5,24 @@ import { Input, Button } from 'react-native-elements';
 
 import API from '../Api.js';
 import Toast from 'react-native-toast-message';
-import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserContext } from "../context/userContext";
 
 export default class Card extends Component{
 
     constructor(props){
         super(props)
         this.state = {
-            bases: new Array(),
-            initals: null,
-            password: null
-            
+            bases: [],
+            user: {
+                initals: null,
+                password: null,
+                currentBaseId: 0,
+            }
         }
     }
+
+    static contextType = UserContext;
 
     componentDidMount(){
         API.get(`api/bases`)
@@ -27,6 +32,8 @@ export default class Card extends Component{
         .catch(error => console.log(error));
     }
 
+
+    //Connexion de l'utilisateur
     submitLogin = () =>{
         let formData = new FormData();
         formData.append('initials', this.state.initals)
@@ -38,13 +45,15 @@ export default class Card extends Component{
             }
         })
             .then(res =>{
-                SecureStore.setItemAsync('token', res.data.token);
+                AsyncStorage.setItem('token', res.data.token);
             })
             .catch(error =>{
                 console.log(error.message)
                 Toast.show({
                     type: 'error',
                     position: 'top',
+                    text1: 'Mauvaise combinaison',
+                    text2: 'Veuillez reessayer'
                     
                 });
             });
@@ -54,7 +63,7 @@ export default class Card extends Component{
     render(){
         return (
             <View style={styles.container}>
-                <Input placeholder='Itiniales' onChange={e => this.setState({initals: e.target.value})}/>
+                <Input placeholder='Initiales' onChange={e => this.setState({initals: e.target.value})}/>
                 <Input placeholder='Mot de passe'  onChange={e => this.setState({password: e.target.value})}/>
                 <Picker>
                 {this.state.bases.map((base) => (
