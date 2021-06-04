@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import {Button} from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import  UserContext  from "../App";
+import { UserContext } from "../context/userContext";
 
 import HomeScreen from "../screens/Home";
+import ConsultationsScreen from "../screens/Consultations";
 import ReportsScreen from "../screens/Reports";
 import DrugsScreen from "../screens/Drugs";
 import SignInScreen from "../screens/SignIn";
@@ -13,7 +14,7 @@ const Stack = createStackNavigator()
 
 export default class StackNavigator extends Component{
 
-    static contextType = UserContext
+    static contextType = UserContext;
 
     constructor(props){
         super(props)
@@ -22,7 +23,8 @@ export default class StackNavigator extends Component{
     render() {
         return(
             <Stack.Navigator>
-                {this.context.user?.token == null ? (
+                {console.log(this.context)}
+                {this.context.token == null ? (
                     // No token found, user isn't signed in
                     <Stack.Screen
                         name="SignIn"
@@ -37,13 +39,13 @@ export default class StackNavigator extends Component{
                         <Stack.Screen name="Home" component={HomeScreen} options={{
                             headerRight: () => (
                                 <Button
-                                  onPress={this.logout}
-                                  title="Logout"
+                                  onPress={this.context.clear}
+                                  title={"Logout " + this.context.initials}
                                   color="#000"
                                 />
                                 ),
                             }} />
-                        
+                        <Stack.Screen name="Consultations" component={ConsultationsScreen} />
                         <Stack.Screen name="Reports" component={ReportsScreen} />
                         <Stack.Screen name="Drugs" component={DrugsScreen} />
                     </>
