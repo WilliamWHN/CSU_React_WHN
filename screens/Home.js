@@ -11,12 +11,16 @@ export default class HomeScreen extends Component{
             <View>
                 <Text>Home Screen</Text>
                 <Button
-                    title="Go to Drugs"
-                    onPress={() => this.props.navigation.push('Drugs')}
+                    title="Consulter"
+                    onPress={() => this.props.navigation.push('Consultations')}
                 />
                 <Button
-                    title="Go to Reports"
+                    title="Rapporter"
                     onPress={() => this.props.navigation.push('Reports')}
+                />
+                <Button
+                    title="Drogues"
+                    onPress={() => this.props.navigation.push('Drugs')}
                 />
             </View>
         );
