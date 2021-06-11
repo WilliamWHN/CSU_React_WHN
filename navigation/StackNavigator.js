@@ -9,6 +9,7 @@ import ConsultationsScreen from "../screens/Consultations";
 import ReportsScreen from "../screens/Reports";
 import DrugsScreen from "../screens/Drugs";
 import SignInScreen from "../screens/SignIn";
+import DetailsScreen from "../screens/Details";
 
 const Stack = createStackNavigator()
 
@@ -48,6 +49,7 @@ export default class StackNavigator extends Component{
                         <Stack.Screen name="Consultations" component={ConsultationsScreen} />
                         <Stack.Screen name="Reports" component={ReportsScreen} />
                         <Stack.Screen name="Drugs" component={DrugsScreen} />
+                        <Stack.Screen name="Details" component={DetailsScreen} />
                     </>
                 )}
             </Stack.Navigator>
