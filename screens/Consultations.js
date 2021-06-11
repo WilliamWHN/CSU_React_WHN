@@ -3,6 +3,7 @@ import {UserContext} from "../context/userContext.js"
 import { ListItem } from 'react-native-elements'
 import API from '../Api.js';
 import { View, Button, StyleSheet, Text, SafeAreaView, ScrollView, StatusBar, ModerateScale, TouchableOpacity } from "react-native";
+import Toast from "react-native-toast-message";
 
 
 export default class ConsultationsScreen extends Component{
@@ -34,16 +35,21 @@ export default class ConsultationsScreen extends Component{
         return(
             <SafeAreaView style={styles.container}>
                 <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={styles.button_shift} onPress={() => { this.setState({reports: this.state.shifts})}}>
-                        <Text style={styles.text}>Garde</Text>
+                    <TouchableOpacity style={styles.buttonShift} onPress={() => { this.setState({reports: this.state.shifts})}}>
+                        <Text style={styles.textButtons}>Garde</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button_stup} onPress={() => { this.setState({reports: this.state.drugs})}}>
-                        <Text style={styles.text}>Stup</Text>
+                    <TouchableOpacity style={styles.buttonStup} onPress={() => { this.setState({reports: this.state.drugs})}}>
+                        <Text style={styles.textButtons}>Stup</Text>
                     </TouchableOpacity>
                 </View>
                 {
                     this.state.reports ? this.state.reports.map((report, i) => (
-                        <ListItem key={i} bottomDivider onPress={() => {this.props.navigation.push('Details', {itemId: report.id})}}>
+                        <ListItem key={i} bottomDivider onPress={() => {
+                            !report.week ? this.props.navigation.push('Details', {reportId: report.id, date: report.date, base: report.base}) : Toast.show({
+                            type: 'error',
+                            position: 'top',
+                            text1: 'Pas de rapport a afficher',
+                        });}}>
                             <ListItem.Content>
                                 {
                                     report.week ? (
@@ -79,7 +85,7 @@ const styles = StyleSheet.create({
         fontSize: 40,
         color: "blue",
     },
-    button_stup:{
+    buttonStup:{
         margin: 12,
         height: 40,
         width: 150,
@@ -88,7 +94,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "green",
     },
-    button_shift:{
+    buttonShift:{
         margin: 12,
         height: 40,
         width: 150,
@@ -97,7 +103,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "black",
     },
-    text:{
+    textButtons:{
         color: "white",
         fontSize: 18,
     }
