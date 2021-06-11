@@ -5,7 +5,6 @@ import { Input, Button } from 'react-native-elements';
 
 import API from '../Api.js';
 import Toast from 'react-native-toast-message';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from "../context/userContext";
 
 export default class Card extends Component{
@@ -46,9 +45,9 @@ export default class Card extends Component{
             }
         })
             .then(res =>{
-                AsyncStorage.setItem('token', res.data.token);
-                AsyncStorage.setItem("initials", this.state.initials);
-                AsyncStorage.setItem("currentBaseId", this.state.currentBaseId);
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem("initials", this.state.initials);
+                localStorage.setItem("currentBaseId", this.state.currentBaseId);
                 const user = {
                     initials: this.state.initials,
                     token: res.data.token,
