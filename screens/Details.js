@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {View, Text, StyleSheet, StatusBar, SafeAreaView} from "react-native";
 import API from '../Api.js';
 import {IoSunny, IoMoon} from 'react-icons/io5'
+import { BiLoaderCircle } from "react-icons/bi";
 
 export default class DetailsScreen extends Component{
 
@@ -32,7 +33,7 @@ export default class DetailsScreen extends Component{
                             <Text style={styles.actionDate}>{action.at}</Text>
                         </View>
                      )):(
-                        <Text style={styles.loadingText}>Chargement...</Text>
+                        <View style={styles.loadingTextContainer}><Text style={styles.loadingText}><BiLoaderCircle/> Chargement</Text></View>
                      )
                  }
             </SafeAreaView>
@@ -56,7 +57,12 @@ const styles = StyleSheet.create({
     loadingText:{
         textAlign: 'center',
         fontSize: 40,
-        color: "blue",
+        color: "black",
+    },
+    loadingTextContainer:{
+        justifyContent: 'center', //Centered vertically
+        alignItems: 'center', // Centered horizontally
+        flex:1
     },
     title:{
         color: "black",

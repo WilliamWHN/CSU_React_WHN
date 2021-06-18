@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {UserContext} from "../context/userContext.js"
 import { ListItem } from 'react-native-elements'
 import API from '../Api.js';
+import { BiLoaderCircle } from "react-icons/bi";
 import { View, Button, StyleSheet, Text, SafeAreaView, ScrollView, StatusBar, ModerateScale, TouchableOpacity } from "react-native";
 import Toast from "react-native-toast-message";
 
@@ -22,7 +23,6 @@ export default class ConsultationsScreen extends Component{
     async componentDidMount(){
        API.get('api/reports')
        .then(res => {
-           console.log(res.data)
             this.setState({
                 shifts: res.data.shift,
                 drugs: res.data.drug,
@@ -62,7 +62,7 @@ export default class ConsultationsScreen extends Component{
                             <ListItem.Chevron />
                         </ListItem>                    
                     )) : (
-                        <Text style={styles.loadingText}>Chargement...</Text>
+                        <View style={styles.loadingTextContainer}><Text style={styles.loadingText}><BiLoaderCircle/> Chargement</Text></View>
                     )
                 }
             </SafeAreaView>
@@ -83,7 +83,12 @@ const styles = StyleSheet.create({
     loadingText:{
         textAlign: 'center',
         fontSize: 40,
-        color: "blue",
+        color: "black",
+    },
+    loadingTextContainer:{
+        justifyContent: 'center', //Centered vertically
+        alignItems: 'center', // Centered horizontally
+        flex:1
     },
     buttonStup:{
         margin: 12,
