@@ -1,18 +1,55 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import InputSpinner from "react-native-input-spinner";
+import API from '../Api.js';
+import Toast from 'react-native-toast-message';
 
 export default class CheckCard extends Component{
 
     constructor(props){
         super(props)
         this.info = this.props.info
+        this.state = {
+            start_quantity: this.info.start,
+            end_quantity: this.info.end
+        }
+    }
+
+    postFarmaCheck(){
+        
+        this.info.nova ? 
+            API.post('api/novacheck', {
+                nova_id: this.info.nova_id,
+                drugsheet_id: this.info.drugsheet_id,
+                start: this.state.start_quantity,
+                end: this.state.end_quantity,
+                date: this.info.date,
+                drug_id: this.info.drug_id
+            })
+        : 
+            API.post('api/pharmacheck', {
+                batch_id: this.info.batch_id,
+                drugsheet_id: this.info.drugsheet_id,
+                start: this.state.start_quantity,
+                end: this.state.end_quantity,
+                date: this.info.date,
+            })
+        Toast.show({
+            type: 'success',
+            position: 'top',
+            text1: 'Modification effectuées',
+            
+        });
+        this.props.onSubmit()
     }
 
     render(){
         return(
             <View style={styles.container}>
-                {this.info.nova ? <Text>De {this.info.drug} de la nova {this.info.nova}</Text> : <Text style={styles.cardTitle}>Du lot {this.info.batch_number} de {this.info.drug}</Text>}
+                {this.info.nova ? 
+                    <Text style={styles.cardTitle}>De {this.info.drug} de la nova {this.info.nova}</Text>
+                    : 
+                    <Text style={styles.cardTitle}>Du lot {this.info.batch_number} de {this.info.drug}</Text>}
                 <Text style={styles.text}>Matin :</Text>
                 <InputSpinner
                     style={styles.inputSpinner}
@@ -22,7 +59,7 @@ export default class CheckCard extends Component{
                     colorMin={"red"}
                     value={this.info.start}
                     onChange={(num) => {
-                        console.log(num);
+                        this.setState({start_quantity: num})
                     }}
                 />
                 <Text style={styles.text}>Soir :</Text>
@@ -34,10 +71,10 @@ export default class CheckCard extends Component{
                     colorMin={"red"}
                     value={this.info.end}
                     onChange={(num) => {
-                        console.log(this.info);
+                        this.setState({end_quantity: num})
                     }}
                 />
-                <TouchableOpacity style={styles.submitButton}><Text style={styles.submitButtonText}>Envoyer</Text></TouchableOpacity>
+                <TouchableOpacity  onPress={() => {this.postFarmaCheck()}} style={styles.submitButton}><Text style={styles.submitButtonText}>Envoyer</Text></TouchableOpacity>
             </View>
         )
     }
