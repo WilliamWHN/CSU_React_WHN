@@ -10,41 +10,43 @@ export default class ReportsScreen extends Component{
 
     constructor(props){
         super(props)
-        this.pharma, this.nova = null
         this.state = {
-            checks: null,
+            tab: "",
         }
     }
 
     async componentDidMount(){
         API.get('api/missingchecks/' + this.context.currentBaseId)
         .then(res => {
-            this.nova = res.data.nova
-            this.pharma = res.data.pharma
             this.setState({
-                checks: res.data.pharma,
+                tab: "pharma",
+                pharma: res.data.pharma,
+                nova: res.data.nova,
             })
             
-        })
+        })  
     }
 
     render(){
         return(
             <SafeAreaView style={styles.container}>
                 <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={styles.buttonShift} onPress={() => {this.setState({checks: this.pharma})}}>
+                    <TouchableOpacity style={styles.buttonShift} onPress={() => {this.setState({tab: "pharma"})}}>
                         <Text style={styles.textButtons}>Pharma</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonStup} onPress={() => {this.setState({checks: this.nova})}}>
+                    <TouchableOpacity style={styles.buttonStup} onPress={() => {this.setState({tab: "nova"})}}>
                         <Text style={styles.textButtons}>Nova</Text>
                     </TouchableOpacity>
                 </View>
                 {
-                    this.state.checks ? this.state.checks.map((check) => (
+                    this.state.tab === "pharma" && this.state.pharma?.map((check) => (
                         <CheckCard info={check}/>
-                    )) : (
-                        <Text style={styles.loadingText}>Chargement...</Text>
-                    )
+                    ))
+                }
+                {
+                    this.state.tab === "nova" && this.state.nova?.map((check) => (
+                        <CheckCard info={check}/>
+                    ))
                 }
             </SafeAreaView>
         );
