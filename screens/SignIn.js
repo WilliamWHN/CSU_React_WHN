@@ -24,7 +24,7 @@ export default class Card extends Component{
         .then(res =>{
             this.setState({
                 bases: res.data,
-                currentBaseId: res.data[0].id,
+                currentBaseId: res.data[3].id,
             })
         })
         .catch(error => console.log(error));
