@@ -24,7 +24,6 @@ export default class StackNavigator extends Component{
     render() {
         return(
             <Stack.Navigator>
-                {console.log(this.context)}
                 {this.context.token == null ? (
                     // No token found, user isn't signed in
                     <Stack.Screen
