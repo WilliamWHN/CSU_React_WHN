@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TouchableHighlight, Image, TextInput } from 'react-native'; 
+import { StyleSheet, Text, View, TouchableHighlight, TextInput } from 'react-native'; 
 import { Picker } from '@react-native-community/picker'
 import { Input, Button } from 'react-native-elements';
 
