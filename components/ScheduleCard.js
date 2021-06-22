@@ -18,7 +18,7 @@ export default class ScheduleCard extends Component{
         }
     }
 
-    //TODO Centraliser les messages d'erreurs car trop répétitifs
+    //TODO Centraliser les messages d'erreurs car trop répétitifs (utilisé par des components & vues)
     postConfirmation(){
         API.post('api/confirmworkplan', {
             id: this.info.id,
@@ -61,14 +61,15 @@ export default class ScheduleCard extends Component{
                 <Text style={styles.cardTitle}>Date : {this.info.date} / Code : {this.info.worktime.type}</Text>
                 {this.info.confirmation === 0 ?
                 <>
-                    <Text style={styles.cardTitle}>A discuter, Raison: {this.info.reason}</Text>
+                    <Text style={styles.cardTitle}>Status: A discuter</Text>
+                    <Text style={styles.cardTitle}>Raison: {this.info.reason}</Text>
                     <Picker selectedValue="0" onValueChange={(itemValue) => this.setState({ confirmation: itemValue })}>
                          <Picker.Item label="Confirmer" value="1"></Picker.Item>
                     </Picker>
                 </>
                 : 
                 <>
-                    <Text style={styles.cardTitle}>A confirmer</Text>
+                    <Text style={styles.cardTitle}>Status: A discuter/confirmer</Text>
                     <Picker selectedValue={this.state.confirmation} onValueChange={(itemValue) => this.setState({ confirmation: itemValue })}>
                          <Picker.Item label="Confirmer" value="1"></Picker.Item>
                          <Picker.Item label="A discuter" value="0"></Picker.Item>
@@ -76,9 +77,8 @@ export default class ScheduleCard extends Component{
                 </>
                 }
                 {
-                    this.state.confirmation == 0 ?
+                    this.state.confirmation == 0 &&
                         <Input placeholder='Raison' onChange={e => this.reason = e.target.value}/>
-                    : null
                     
                 }
                 <TouchableOpacity  onPress={() => {this.postConfirmation()}} style={styles.submitButton}><Text style={styles.submitButtonText}>Envoyer</Text></TouchableOpacity>
