@@ -51,7 +51,7 @@ export default class HomeScreen extends Component{
 
 const styles = StyleSheet.create({
     containerNavButton:{
-        flex: 1,
+        flex: 1.5,
         paddingTop: StatusBar.currentHeight,
         justifyContent: 'center', //Centered vertically
     },

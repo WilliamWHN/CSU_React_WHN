@@ -31,7 +31,7 @@ export default class StackNavigator extends Component{
                         name="SignIn"
                         component={SignInScreen}
                         options={{
-                            title: 'Login'
+                            title: 'Login',
                         }}
                     />
                 ) : (

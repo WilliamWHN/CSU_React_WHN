@@ -80,6 +80,7 @@ export default class Card extends Component{
                     ))}
                 </Picker>
                 <Button title="Login" onPress={this.submitLogin}/>
+                <Text>Version: eval WHN</Text>
             </View>
         );  
     }
