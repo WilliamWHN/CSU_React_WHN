@@ -48,7 +48,7 @@ export default class ScheduleCard extends Component{
             Toast.show({
                 type: 'success',
                 position: 'top',
-                text1: 'Horaire confirmé, Merci !',
+                text1: 'Horaire actualisé, Merci !',
                 visibilityTime: 1000,
             })
         )
@@ -61,15 +61,15 @@ export default class ScheduleCard extends Component{
                 <Text style={styles.cardTitle}>Date : {this.info.date} / Code : {this.info.worktime.type}</Text>
                 {this.info.confirmation === 0 ?
                 <>
-                    <Text style={styles.cardTitle}>Status: A discuter</Text>
+                    <Text style={styles.cardTitle}>Status actuel: A discuter</Text>
                     <Text style={styles.cardTitle}>Raison: {this.info.reason}</Text>
-                    <Picker selectedValue="0" onValueChange={(itemValue) => this.setState({ confirmation: itemValue })}>
+                    <Picker enabled={false} selectedValue="0" onValueChange={(itemValue) => this.setState({ confirmation: itemValue })}>
                          <Picker.Item label="Confirmer" value="1"></Picker.Item>
                     </Picker>
                 </>
                 : 
                 <>
-                    <Text style={styles.cardTitle}>Status: A discuter/confirmer</Text>
+                    <Text style={styles.cardTitle}>Status actuel: A discuter / confirmer</Text>
                     <Picker selectedValue={this.state.confirmation} onValueChange={(itemValue) => this.setState({ confirmation: itemValue })}>
                          <Picker.Item label="Confirmer" value="1"></Picker.Item>
                          <Picker.Item label="A discuter" value="0"></Picker.Item>
