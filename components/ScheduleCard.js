@@ -12,13 +12,47 @@ export default class ScheduleCard extends Component{
     constructor(props){
         super(props)
         this.info = this.props.info
+        this.reason = null
         this.state = {
-            confirmation: null
+            confirmation: 1
         }
     }
 
+    //TODO Centraliser les messages d'erreurs car trop répétitifs
     postConfirmation(){
-
+        API.post('api/confirmworkplan', {
+            id: this.info.id,
+            confirmation: this.state.confirmation,
+            reason: this.reason,
+        }).catch(err => {
+            switch(err.response.status){
+                case 400 :
+                    Toast.show({
+                        type: 'error',
+                        position: 'top',
+                        text1: 'Raison inavlide',
+                        text2: 'Veuillez en rentrez une plus longue SVP'
+                        
+                    });
+                    break;
+                case 500 :
+                    Toast.show({
+                        type: 'error',
+                        position: 'top',
+                        text1: 'Serveur Inateignable',
+                        
+                    });
+                    break; 
+            }
+        }).then(
+            Toast.show({
+                type: 'success',
+                position: 'top',
+                text1: 'Horaire confirmé, Merci !',
+                visibilityTime: 1000,
+            })
+        )
+        this.props.onSubmit()
     }
 
     render(){
@@ -43,7 +77,7 @@ export default class ScheduleCard extends Component{
                 }
                 {
                     this.state.confirmation == 0 ?
-                        <Input placeholder='Raison' onChange={e => this.setState({initials: e.target.value})}/>
+                        <Input placeholder='Raison' onChange={e => this.reason = e.target.value}/>
                     : null
                     
                 }
