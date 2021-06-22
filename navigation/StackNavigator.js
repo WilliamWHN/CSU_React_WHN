@@ -10,6 +10,7 @@ import ReportsScreen from "../screens/Reports";
 import DrugsScreen from "../screens/Drugs";
 import SignInScreen from "../screens/SignIn";
 import DetailsScreen from "../screens/Details";
+import ScheduleScreen from "../screens/Schedules";
 
 const Stack = createStackNavigator()
 
@@ -49,6 +50,7 @@ export default class StackNavigator extends Component{
                         <Stack.Screen name="Reports" component={ReportsScreen} />
                         <Stack.Screen name="Drugs" component={DrugsScreen} />
                         <Stack.Screen name="Details" component={DetailsScreen} />
+                        <Stack.Screen name="Horaires a confirmer" component={ScheduleScreen} />
                     </>
                 )}
             </Stack.Navigator>
