@@ -30,7 +30,8 @@ export default class SchedulesScreen extends Component{
             });
         })
         .then(res =>{
-            this.setState({schedules: null})
+            //TODO: Find a better way to restructure the table
+            this.setState({schedules: null}) 
             this.setState({schedules: res.data})
         })
     }
@@ -67,6 +68,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 27,
         color: "#3e525f",
+        fontWeight: "500",
+        margin: 10,
     },
     loadingTextContainer:{
         justifyContent: 'center', //Centered vertically

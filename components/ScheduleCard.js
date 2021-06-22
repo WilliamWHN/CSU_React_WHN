@@ -18,7 +18,7 @@ export default class ScheduleCard extends Component{
         }
     }
 
-    //TODO Centraliser les messages d'erreurs car trop répétitifs (utilisé par des components & vues)
+    //TODO Centralize errors message bceause it's used in other components/screens
     postConfirmation(){
         API.post('api/confirmworkplan', {
             id: this.info.id,
@@ -63,14 +63,14 @@ export default class ScheduleCard extends Component{
                 <>
                     <Text style={styles.cardTitle}>Status actuel: A discuter</Text>
                     <Text style={styles.cardTitle}>Raison: {this.info.reason}</Text>
-                    <Picker enabled={false} selectedValue="0" onValueChange={(itemValue) => this.setState({ confirmation: itemValue })}>
+                    <Picker enabled={false} selectedValue="0" onValueChange={(itemValue) => this.setState({ confirmation: itemValue })}> {/*TODO: Change hardcoded states*/}
                          <Picker.Item label="Confirmer" value="1"></Picker.Item>
                     </Picker>
                 </>
                 : 
                 <>
                     <Text style={styles.cardTitle}>Status actuel: A discuter / confirmer</Text>
-                    <Picker selectedValue={this.state.confirmation} onValueChange={(itemValue) => this.setState({ confirmation: itemValue })}>
+                    <Picker selectedValue={this.state.confirmation} onValueChange={(itemValue) => this.setState({ confirmation: itemValue })}> {/*TODO: Change hardcoded states*/}
                          <Picker.Item label="Confirmer" value="1"></Picker.Item>
                          <Picker.Item label="A discuter" value="0"></Picker.Item>
                     </Picker>

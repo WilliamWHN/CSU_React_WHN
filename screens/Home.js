@@ -37,7 +37,7 @@ export default class HomeScreen extends Component{
                     { 
                         this.state.nbOfSchedules &&
                             <TouchableOpacity style={styles.buttons} onPress={() => this.props.navigation.push('Horaires a confirmer')}>
-                                <Text style={styles.textButtons}>Horaires a confirmer: {this.state.nbOfSchedules}</Text>
+                                <Text style={styles.textButtons}>Horaires a confirmer : {this.state.nbOfSchedules}</Text>
                             </TouchableOpacity>
                     }   
                 </View>
