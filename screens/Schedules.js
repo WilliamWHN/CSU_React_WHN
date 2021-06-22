@@ -21,6 +21,14 @@ export default class SchedulesScreen extends Component{
 
     getUnconfirmedSchedules(){
         API.get(`api/unconfirmedworkplans`)
+        .catch(err => {
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Serveur Inateignable',
+                
+            });
+        })
         .then(res =>{
             this.setState({schedules: null})
             this.setState({schedules: res.data})
