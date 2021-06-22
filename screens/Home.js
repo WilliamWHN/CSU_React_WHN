@@ -1,9 +1,21 @@
 import React, { Component } from "react";
 import {View, Text, StatusBar, StyleSheet, TouchableOpacity, Image} from "react-native";
+import API from '../Api.js';
 
 export default class HomeScreen extends Component{
     constructor(props){
         super(props)
+        this.state = {
+            nbOfSchedules: null
+        }
+    }
+    
+    componentDidMount(){
+        API.get(`api/unconfirmedworkplans`)
+        .then(res =>{
+            //TODO Gerer les erreurs
+            this.setState({nbOfSchedules: res.data.length})
+        })
     }
 
     render(){
@@ -11,11 +23,16 @@ export default class HomeScreen extends Component{
             <>
                 <View style={styles.containerNavButton}>
                     <TouchableOpacity style={styles.buttons} onPress={() => this.props.navigation.push('Consultations')}>
-                    <Text style={styles.textButtons}>Consulter</Text>
+                        <Text style={styles.textButtons}>Consulter</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.buttons} onPress={() => this.props.navigation.push('Reports')}>
-                    <Text style={styles.textButtons}>Rapporter</Text>
+                        <Text style={styles.textButtons}>Rapporter</Text>
                     </TouchableOpacity>
+                    { this.state.nbOfSchedules ? 
+                    <TouchableOpacity style={styles.buttons} onPress={() => this.props.navigation.push('Horaires a confirmer')}>
+                        <Text style={styles.textButtons}>Horaires a confirmer: {this.state.nbOfSchedules}</Text>
+                    </TouchableOpacity> : null
+                    }   
                 </View>
                 <View style={styles.container}>
                     <Image style={styles.stretch} source={require("./img/csunvb_logo.png")} />
