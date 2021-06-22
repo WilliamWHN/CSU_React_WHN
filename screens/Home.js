@@ -13,8 +13,14 @@ export default class HomeScreen extends Component{
     componentDidMount(){
         API.get(`api/unconfirmedworkplans`)
         .then(res =>{
-            //TODO Gerer les erreurs
             this.setState({nbOfSchedules: res.data.length})
+        })
+        .catch(err => {
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Serveur Inateignable',
+            });
         })
     }
 
@@ -28,10 +34,11 @@ export default class HomeScreen extends Component{
                     <TouchableOpacity style={styles.buttons} onPress={() => this.props.navigation.push('Reports')}>
                         <Text style={styles.textButtons}>Rapporter</Text>
                     </TouchableOpacity>
-                    { this.state.nbOfSchedules ? 
-                    <TouchableOpacity style={styles.buttons} onPress={() => this.props.navigation.push('Horaires a confirmer')}>
-                        <Text style={styles.textButtons}>Horaires a confirmer: {this.state.nbOfSchedules}</Text>
-                    </TouchableOpacity> : null
+                    { 
+                        this.state.nbOfSchedules &&
+                            <TouchableOpacity style={styles.buttons} onPress={() => this.props.navigation.push('Horaires a confirmer')}>
+                                <Text style={styles.textButtons}>Horaires a confirmer: {this.state.nbOfSchedules}</Text>
+                            </TouchableOpacity>
                     }   
                 </View>
                 <View style={styles.container}>
